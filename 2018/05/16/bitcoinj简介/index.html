@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="一个良好的开始，记录关于bitcoij的学习过程">
+<meta name="description" content="bitcoinj是一个让我们方便使用比特币协议的类库。它可以维护一个钱包，可以在不拷贝BTC核心代码的条件下进行交易的发送/接收，还有许多其他高级功能。这个库虽然是用Java实现的，但是可以从任何JVM兼容的语言中使用:例如Python和JavaScript。">
 <meta name="keywords" content="BTC,区块链,开发,bitcoinj">
 <meta property="og:type" content="article">
 <meta property="og:title" content="什么是bitcoinj？">
 <meta property="og:url" content="http://yoursite.com/2018/05/16/bitcoinj简介/index.html">
 <meta property="og:site_name" content="Runtime编码之旅">
-<meta property="og:description" content="一个良好的开始，记录关于bitcoij的学习过程">
+<meta property="og:description" content="bitcoinj是一个让我们方便使用比特币协议的类库。它可以维护一个钱包，可以在不拷贝BTC核心代码的条件下进行交易的发送/接收，还有许多其他高级功能。这个库虽然是用Java实现的，但是可以从任何JVM兼容的语言中使用:例如Python和JavaScript。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-16T07:35:16.000Z">
+<meta property="og:updated_time" content="2018-05-16T11:04:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="什么是bitcoinj？">
-<meta name="twitter:description" content="一个良好的开始，记录关于bitcoij的学习过程">
+<meta name="twitter:description" content="bitcoinj是一个让我们方便使用比特币协议的类库。它可以维护一个钱包，可以在不拷贝BTC核心代码的条件下进行交易的发送/接收，还有许多其他高级功能。这个库虽然是用Java实现的，但是可以从任何JVM兼容的语言中使用:例如Python和JavaScript。">
 
 
 
@@ -287,7 +287,7 @@
 
           
               <div class="post-description">
-                  一个良好的开始，记录关于bitcoij的学习过程
+                  bitcoinj是一个让我们方便使用比特币协议的类库。它可以维护一个钱包，可以在不拷贝BTC核心代码的条件下进行交易的发送/接收，还有许多其他高级功能。这个库虽然是用Java实现的，但是可以从任何JVM兼容的语言中使用:例如Python和JavaScript。
               </div>
           
 
@@ -305,6 +305,20 @@
 
       
         <a id="more"></a>
+<p>它附带了完整的文档，还有许多著名的比特币的应用和服务。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>高度优化的轻量级简化支付验证(SPV)模式。在这种模式下，只有一小部分的区块链被下载，使得bitcoinj适合在智能手机或便宜的虚拟私人服务器等受限设备上使用。</li>
+<li>实验完全验证模式，与比特币核心做同样的验证工作。在此模式下，将计算未使用的事务输出集(UTXO set)，由于使用PostgreSQL存储，可以将其编入数据库，以便通过地址快速查找余额。</li>
+<li>一个包含加密，费用计算，多重签名，确定性密钥派生，可插入硬币选择/投币控制，扩展支持和事件监听器的钱包类，让您随时掌握您的余额变化。</li>
+<li>支持小额渠道支付，使您可以在客户端和服务器之间建立多重签名合同，然后在渠道上进行协商，从而实现快速小额支付，避免矿工费用。</li>
+<li>对于网络IO提供异步和为Thread-per-connection(每个连接分配一个线程)连接，你可以在可扩展性和阻塞（如SOCKS / Tor代理）之间进行选择。</li>
+<li>可以很便捷的开发一个基于比特币合约功能的应用程序。</li>
+<li>提供一个简单的GUI钱包应用程序，可以使用它作为您自己的应用程序的基础。 </li>
+<li>强大的比特币标准支持</li>
+<li>提供处理钱包和链上文件、支付协议、网络等等的命令行工具</li>
+<li>O(∩_∩)O~友好和乐于助人的社区!</li>
+</ul>
+
       
     </div>
     
@@ -384,8 +398,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -436,6 +459,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#特点"><span class="nav-number">1.</span> <span class="nav-text">特点</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
