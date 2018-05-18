@@ -79,22 +79,22 @@
 
 
 
-<meta name="description" content="入门 - 关于如何在ava环境下使用使用该库的分步教程。">
+<meta name="description" content="入门 - 关于如何在Java环境下使用该库的分步教程。">
 <meta name="keywords" content="bitcoinj,BTC,区块链,开发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="bitcoinj入门">
-<meta property="og:url" content="http://yoursite.com/2018/05/16/bitcoinj入门/index.html">
+<meta property="og:title" content="bitcoinj入门教程">
+<meta property="og:url" content="http://yoursite.com/2018/05/18/bitcoinj入门/index.html">
 <meta property="og:site_name" content="Runtime编码之旅">
-<meta property="og:description" content="入门 - 关于如何在ava环境下使用使用该库的分步教程。">
+<meta property="og:description" content="入门 - 关于如何在Java环境下使用该库的分步教程。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/05/16/bitcoinj入门/1631526483506_.pic.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/05/16/bitcoinj入门/1641526483990_.pic_hd.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/05/16/bitcoinj入门/1661526484301_.pic_hd.jpg">
-<meta property="og:updated_time" content="2018-05-16T15:25:53.000Z">
+<meta property="og:image" content="http://yoursite.com/2018/05/18/bitcoinj入门/1631526483506_.pic.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/05/18/bitcoinj入门/1641526483990_.pic_hd.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/05/18/bitcoinj入门/1661526484301_.pic_hd.jpg">
+<meta property="og:updated_time" content="2018-05-18T08:35:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="bitcoinj入门">
-<meta name="twitter:description" content="入门 - 关于如何在ava环境下使用使用该库的分步教程。">
-<meta name="twitter:image" content="http://yoursite.com/2018/05/16/bitcoinj入门/1631526483506_.pic.jpg">
+<meta name="twitter:title" content="bitcoinj入门教程">
+<meta name="twitter:description" content="入门 - 关于如何在Java环境下使用该库的分步教程。">
+<meta name="twitter:image" content="http://yoursite.com/2018/05/18/bitcoinj入门/1631526483506_.pic.jpg">
 
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/16/bitcoinj入门/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/18/bitcoinj入门/"/>
 
 
 
 
 
-  <title>bitcoinj入门 | Runtime编码之旅</title>
+  <title>bitcoinj入门教程 | Runtime编码之旅</title>
   
 
 
@@ -237,10 +237,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/16/bitcoinj入门/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/18/bitcoinj入门/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Runtime">
+      <meta itemprop="name" content="Runtime：daizhiqing8@163.com">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -254,7 +254,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">bitcoinj入门</h1>
+          <h1 class="post-title" itemprop="name headline">bitcoinj入门教程</h1>
         
 
         <div class="post-meta">
@@ -266,8 +266,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-16T21:47:02+08:00">
-                2018-05-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-18T21:47:02+08:00">
+                2018-05-18
               </time>
             
 
@@ -291,7 +291,7 @@
 
           
               <div class="post-description">
-                  入门 - 关于如何在ava环境下使用使用该库的分步教程。
+                  入门 - 关于如何在Java环境下使用该库的分步教程。
               </div>
           
 
@@ -312,9 +312,24 @@
 <h2 id="基础介绍"><a href="#基础介绍" class="headerlink" title="基础介绍"></a>基础介绍</h2><p>本文档介绍了如何使用0.14.7中的代码，git master可能略有不同</p>
 <p>bitcoinj是在Java 7环境下运行的，同时可以使用该版本JVM支持的任意语言。 本教程适用于Java和JavaScript，但你同样可以在Python、Scala、Clojure、Kotlin、Ruby等等中使用bitcoinj，大多数流行的编程语言都可以在JVM运行。</p>
 <p>请注意，这些教程都是需要你熟悉比特币协议的基础知识。 如果您还不熟悉区块链的结构以及区块链交易交易的工作方式，请在阅读本教程之前阅读<a href="bitcoin.pdf">中本聪的白皮书</a>。</p>
-<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><p>我们可以直接下载<a href="https://search.maven.org/remotecontent?filepath=org/bitcoinj/bitcoinj-core/0.14.7/bitcoinj-core-0.14.7-bundled.jar" target="_blank" rel="noopener">jar包依赖</a>，可以使用<a href="../在maven环境下来使用bitconinj">Maven</a>/<a href="../用Gradle来引用bitcoinj依赖">Gradle</a>来导入相应依赖，或者直接clone下它的<a href="https://github.com/bitcoinj/bitcoinj" target="_blank" rel="noopener">源码</a></p>
-<p>本人是直接基于源码来编译，bitcoinj项目结构如下<br> <img src="/2018/05/16/bitcoinj入门/1631526483506_.pic.jpg" width="300" height="200" alt="图片名称"></p>
-<p> 好了，已经可以跑起来了，我们来运行下源码中提供的钱包<br>  <img src="/2018/05/16/bitcoinj入门/1641526483990_.pic_hd.jpg" width="100%" alt="图片名称"><br>运行结果：<br><img src="/2018/05/16/bitcoinj入门/1661526484301_.pic_hd.jpg" width="100%" alt="图片名称"></p>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><p>我们可以直接下载<a href="https://search.maven.org/remotecontent?filepath=org/bitcoinj/bitcoinj-core/0.14.7/bitcoinj-core-0.14.7-bundled.jar" target="_blank" rel="noopener">jar包依赖</a>，可以使用<a href="../在maven环境下来使用bitconinj">Maven</a>/<a href="../用Gradle来引用bitcoinj依赖">Gradle</a>来导入相应依赖，或者直接clone下它的<a href="https://github.com/bitcoinj/bitcoinj" target="_blank" rel="noopener">源码</a>bitcoinj使用Maven作为其构建系统并通过git分发。您可以使用源代码/ jar下载，但直接从源代码库获取它会更安全。</p>
+<p>本人是直接基于源码来编译，bitcoinj项目结构如下<br> <img src="/2018/05/18/bitcoinj入门/1631526483506_.pic.jpg" width="300" height="200" alt="图片名称"></p>
+<p> 好了，已经可以跑起来了，我们来运行下源码中提供的钱包<br>  <img src="/2018/05/18/bitcoinj入门/1641526483990_.pic_hd.jpg" width="100%" alt="图片名称"><br>运行结果：<br><img src="/2018/05/18/bitcoinj入门/1661526484301_.pic_hd.jpg" width="100%" alt="图片名称"></p>
+<h2 id="动手之前"><a href="#动手之前" class="headerlink" title="动手之前"></a>动手之前</h2><p>这个库不像我们其他的SDK库，你可以直接通过比特币的API来操作BTC资产，如果做生产应用的话这可能是其他人的一大笔钱。理解其内容很重要。就算学习了本教程，您也不具备编写生产应用程序的资格。但是我们可以知道在比特币这个微妙而复杂的系统上，如何去编写这样一个应用。</p>
+<p><strong>如果不能完全的去了解熟悉比特币系统的相关知识，您可能导致货币被盗用或者被永久的销毁</strong></p>
+<p>这个文档能帮助您学习如何使用botcoinj，但是并不是很全面。如果您有任何疑问或者能发现一些代码上的问题，反馈给其官网或者社区。</p>
+<h2 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h2><p>bitcoinj内置了SLF4J库来进行日志管理，同时你可以选择自己喜欢的日志系统来打印日志，例如JDK logging，Android logging等等。默认情况下使用简单的日志记录器stderr来输出日志，我们可以切换lib目录中的jar文件来选择新的日志记录器。</p>
+<p>一个bitcoinj的应用使用以下对象：</p>
+<ul>
+<li><strong>NetworkParameters</strong> 来选择当前的网络(测试/生产)</li>
+<li><strong>Wallet</strong> 来存储 <strong>ECKey</strong> 和其他的一些数据</li>
+<li><strong>PeerGroup</strong> 网络连接的管理</li>
+<li><strong>BlockChain</strong> 用于管理让比特币工作的共享全局数据结构,区块链的数据单元结构</li>
+<li><strong>BlockStore</strong> 将块链数据结构保存在某个位置，例如存储在磁盘。</li>
+<li><strong>WalletEventListener</strong> 它接收钱包的响应事件</li>
+</ul>
+<p>为了简化设置，还有一个 <strong>WalletAppKit</strong> 对象，用于创建上述对象并将它们连接在一起。 虽然可以手动执行此操作（对于大多数“真实”应用程序），这里我们就只演示如何使用应用程序的这个工具包。</p>
+<p>现在来看看代码，看看它是如何工作的。</p>
 
       
     </div>
@@ -351,8 +366,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/16/bitcoinj简介/" rel="next" title="什么是bitcoinj？">
-                <i class="fa fa-chevron-left"></i> 什么是bitcoinj？
+              <a href="/2018/05/16/用Gradle来引用bitcoinj依赖/" rel="next" title="用Gradle来引用bitcoinj依赖">
+                <i class="fa fa-chevron-left"></i> 用Gradle来引用bitcoinj依赖
               </a>
             
           </div>
@@ -360,10 +375,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/16/在maven环境下来使用bitconinj/" rel="prev" title="在maven环境下来使用bitconinj">
-                在maven环境下来使用bitconinj <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -429,8 +440,8 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">Runtime</p>
-              <p class="site-description motion-element" itemprop="description"></p>
+              <p class="site-author-name" itemprop="name">Runtime：daizhiqing8@163.com</p>
+              <p class="site-description motion-element" itemprop="description">daizhiqing8@163.com</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -486,7 +497,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础介绍"><span class="nav-number">1.</span> <span class="nav-text">基础介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装步骤"><span class="nav-number">2.</span> <span class="nav-text">安装步骤</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础介绍"><span class="nav-number">1.</span> <span class="nav-text">基础介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装步骤"><span class="nav-number">2.</span> <span class="nav-text">安装步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动手之前"><span class="nav-number">3.</span> <span class="nav-text">动手之前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本结构"><span class="nav-number">4.</span> <span class="nav-text">基本结构</span></a></li></ol></div>
             
 
           </div>
@@ -510,7 +521,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Runtime</span>
+  <span class="author" itemprop="copyrightHolder">Runtime：daizhiqing8@163.com</span>
 
   
 </div>
