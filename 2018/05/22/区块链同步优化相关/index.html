@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Gradle是一个基于插件的构建系统，最初来自Hans Dockter。 Gradle主要取代老化的Maven和Ant留下的东西。">
+<meta name="description" content="比特币是一种可以传输大量数据的系统。通常你不需要所有的数据，只需要它的一个子集。例如，任何面向钱包应用程序的最终用户都属于此类别:出于性能原因，您不想处理整个区块链。钱包可以与库中的其他类一起工作来实现各种优化。本文详细介绍了bitcoinj实施的各种性能技术，可加快速度。仅用于提供信息：所有这些优化都默认开启，不需要开发人员的任何工作。">
 <meta name="keywords" content="bitcoinj,BTC,区块链,开发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="用Gradle来引用bitcoinj依赖">
-<meta property="og:url" content="http://yoursite.com/2018/05/16/用Gradle来引用bitcoinj依赖/index.html">
+<meta property="og:title" content="区块链同步优化相关">
+<meta property="og:url" content="http://yoursite.com/2018/05/22/区块链同步优化相关/index.html">
 <meta property="og:site_name" content="Runtime编码之旅">
-<meta property="og:description" content="Gradle是一个基于插件的构建系统，最初来自Hans Dockter。 Gradle主要取代老化的Maven和Ant留下的东西。">
+<meta property="og:description" content="比特币是一种可以传输大量数据的系统。通常你不需要所有的数据，只需要它的一个子集。例如，任何面向钱包应用程序的最终用户都属于此类别:出于性能原因，您不想处理整个区块链。钱包可以与库中的其他类一起工作来实现各种优化。本文详细介绍了bitcoinj实施的各种性能技术，可加快速度。仅用于提供信息：所有这些优化都默认开启，不需要开发人员的任何工作。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-16T15:08:11.000Z">
+<meta property="og:updated_time" content="2018-05-22T06:55:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用Gradle来引用bitcoinj依赖">
-<meta name="twitter:description" content="Gradle是一个基于插件的构建系统，最初来自Hans Dockter。 Gradle主要取代老化的Maven和Ant留下的东西。">
+<meta name="twitter:title" content="区块链同步优化相关">
+<meta name="twitter:description" content="比特币是一种可以传输大量数据的系统。通常你不需要所有的数据，只需要它的一个子集。例如，任何面向钱包应用程序的最终用户都属于此类别:出于性能原因，您不想处理整个区块链。钱包可以与库中的其他类一起工作来实现各种优化。本文详细介绍了bitcoinj实施的各种性能技术，可加快速度。仅用于提供信息：所有这些优化都默认开启，不需要开发人员的任何工作。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/16/用Gradle来引用bitcoinj依赖/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/22/区块链同步优化相关/"/>
 
 
 
 
 
-  <title>用Gradle来引用bitcoinj依赖 | Runtime编码之旅</title>
+  <title>区块链同步优化相关 | Runtime编码之旅</title>
   
 
 
@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/16/用Gradle来引用bitcoinj依赖/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/22/区块链同步优化相关/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Runtime：daizhiqing8@163.com">
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">用Gradle来引用bitcoinj依赖</h1>
+          <h1 class="post-title" itemprop="name headline">区块链同步优化相关</h1>
         
 
         <div class="post-meta">
@@ -262,8 +262,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-16T23:06:13+08:00">
-                2018-05-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-22T14:14:49+08:00">
+                2018-05-22
               </time>
             
 
@@ -287,7 +287,7 @@
 
           
               <div class="post-description">
-                  Gradle是一个基于插件的构建系统，最初来自Hans Dockter。 Gradle主要取代老化的Maven和Ant留下的东西。
+                  比特币是一种可以传输大量数据的系统。通常你不需要所有的数据，只需要它的一个子集。例如，任何面向钱包应用程序的最终用户都属于此类别:出于性能原因，您不想处理整个区块链。钱包可以与库中的其他类一起工作来实现各种优化。本文详细介绍了bitcoinj实施的各种性能技术，可加快速度。仅用于提供信息：所有这些优化都默认开启，不需要开发人员的任何工作。
               </div>
           
 
@@ -304,7 +304,15 @@
       
 
       
-        <p>如果您的项目是使用Gradle来管理构建的话，您可以在build.gradle中添加以下依赖：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile <span class="string">'org.bitcoinj:bitcoinj-core:0.14.7'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <a id="more"></a>
+<h2 id="Fast-catchup"><a href="#Fast-catchup" class="headerlink" title="Fast catchup"></a>Fast catchup</h2><p>密钥可以有一个关联的创建时间。 如果钱包知道所有密钥的创建时间，那么当您将其添加到 <strong>PeerGroup</strong> 时，会为您设置快速追加时间。 在快速追赶时间之前阻止内容不必下载，只需要下载头文件，因此以这种系统的引导方式要快得多。 如果你正在实施一个钱包应用程序，这是一个非常有用的优化，将自动利用。</p>
+<p>可以使用 <strong>PeerGroup.setFastCatchupTime</strong> 明确设置快速追加时间，不过每次添加钱包或将keys添加到钱包时都会重新计算。 时间简单地设置为通过调用 <strong>Wallet.getEarliestKeyCreationTime（）</strong> 获得的所有钱包的最早密钥创建时间的最小值。</p>
+<h2 id="Checkpointing"><a href="#Checkpointing" class="headerlink" title="Checkpointing"></a>Checkpointing</h2><p>尽管 <strong>Fast catchup</strong> 和 <strong>Bloom Filter</strong>（见下文）意味着您可以通过下载标头和一些交易+ Merkle分支来同步链，但有时候这仍然太慢了。标题只有80个字节，但系统每运行10分钟就有一个标题。我们可以通过简单的乘法来看到，系统每年只需要大约4兆字节的数据，因此到2013年7月，新用户仍然必须下载并处理超过16兆字节的数据才能使用。</p>
+<p>为了解决这个问题，我们有检查点文件。这些是使用 <strong>BuildCheckpoints</strong> 工具生成的，该工具可以在bitcoinj源代码的工具模块中找到。 BuildCheckpoints下载头文件并将它们的一部分写入文件。该文件可以随应用程序一起发货。当您创建新的BlockStore对象时，可以使用该文件将其初始化为在钱包快速追赶时间之前（即钱包中最老的密钥的生日）的任何检查点块。那么你只需要从这一点开始下载标题。</p>
+<p><strong>Checkpointing</strong> 称为检查点，因为与上游的Satoshi客户端一样，一旦您用一个比特币初始化区块存储库，就会拒绝重新组织（过程链分割）。事实上，它甚至不会意识到重组组织已经发生，因为较早的块不存在于块存储中，因此链的替代叉将仅被看作一组孤立块。出于这个原因，<strong>BuildCheckpoints</strong> 工具不会添加任何运行时间超过一个月的检查点 - 只需要几秒钟就可以下载最后几个月的链表头，并且没有任何分支可能会超过一个月。</p>
+<h2 id="Bloom-filtering"><a href="#Bloom-filtering" class="headerlink" title="Bloom filtering"></a>Bloom filtering</h2><p>默认情况下，PeerGroup和Wallet将一起工作来计算Bloom Filter并将其上传到每个连接的节点。Bloom filtering可以紧凑的，隐私的保护钱包中的密钥/地址。当传递给远程节点时，它会改变其行为。不是中继所有的广播交易和块的全部内容，而是匹配它看到的与过滤器相关的每个交易。如果过滤器匹配，该交易将发送到您的应用，否则将被忽略。当交易发送给您时，因为它在一个区块中，所以它带有一个Merkle分支，它在数学上证明交易已包含在该区块中。 BitcoinJ会为每笔交易检查Merkle分支，并拒绝任何企图欺骗您的行为。</p>
+<p>Bloom filtering可能会很繁琐。比实际存在于钱包中更多密钥或地址的过滤器还要繁琐。繁琐是有意识的，用来保护您的钱包隐私 - 远程节点无法知道匹配的交易是否真的是您的。理论上，钱包密钥/地址可以分散到每个连接的节点上以获得更多隐私，但bitcoinj目前尚未实现。使用 <strong>PeerGroup.setBloomFilterFalsePositiveRate</strong> 可以控制添加到Bloom filtering的noise。从本质上讲，这是一个带宽与隐私的权衡 - 较高的FP率会让远程窃听者更加混淆，但是您必须下载更多无用的数据。如果您不调用该方法，则bitcoinj几乎不会出现误报，从而计算Bloom筛选器。将来，此行为可能会更改为默认情况下保护隐私。</p>
+<p>请注意，使用Bloom Filter时，您的安全性会降低一小部分 - 而远程同行无法说服您将交易包含在一个块中（如果它们不是这样），则它们可以完全排除交易并因此挂载一种拒绝服务的服务攻击你。如果同伴这样做，那么bitcoinj将不会注意到，并且在重新扫描块链之前，您的余额可能不正确。您无需执行任何操作即可利用Bloom筛选功能。它是由框架为您完成的。从bitcoinj 0.10开始，如果您碰巧连接到旧节点，那么太旧以至于无法支持Bloom过滤的节点会自动断开连接，以避免您被广播流量淹没。</p>
 
       
     </div>
@@ -341,8 +349,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/16/在maven环境下来使用bitconinj/" rel="next" title="在maven环境下来使用bitconinj">
-                <i class="fa fa-chevron-left"></i> 在maven环境下来使用bitconinj
+              <a href="/2018/05/21/bitcoin不同组件结合/" rel="next" title="bitcoin不同组件结合">
+                <i class="fa fa-chevron-left"></i> bitcoin不同组件结合
               </a>
             
           </div>
@@ -350,10 +358,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/18/bitcoinj入门/" rel="prev" title="bitcoinj入门教程">
-                bitcoinj入门教程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -405,8 +409,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -457,6 +470,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fast-catchup"><span class="nav-number">1.</span> <span class="nav-text">Fast catchup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Checkpointing"><span class="nav-number">2.</span> <span class="nav-text">Checkpointing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bloom-filtering"><span class="nav-number">3.</span> <span class="nav-text">Bloom filtering</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
