@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Runtime编码之旅">
 <meta property="og:description" content="本文向您展示了典型的基于bitcoinj的应用程序中的不同对象和接口如何交互。 我们将看到数据如何从网络到达，转换成Java对象，然后这些对象如何四处走动，直到最终用它们执行各种操作或保存到磁盘。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-21T14:10:16.000Z">
+<meta property="og:updated_time" content="2018-05-22T06:10:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="bitcoin不同组件结合">
 <meta name="twitter:description" content="本文向您展示了典型的基于bitcoinj的应用程序中的不同对象和接口如何交互。 我们将看到数据如何从网络到达，转换成Java对象，然后这些对象如何四处走动，直到最终用它们执行各种操作或保存到磁盘。">
@@ -353,6 +353,12 @@
 </ul>
 <p>为了让每个交易都有一个新的完整块，最好的链触发器是 <strong>TransactionTransactionRelevant</strong> ，<strong>receiveFromBlock</strong> 然后是 <strong>notifyNewBestBlock</strong>。最佳链触发器上的新过滤块是 <strong>TransactionRelevant</strong>，它是   <strong>receiveFromBlock</strong> 或 <strong>notifyTransactionIsInBlock</strong> 的混合，然后是  <strong>notifyNewBestBlock</strong> 。扩展侧链的新块具有相同的序列，但不包含 <strong>notifyNewBestBlock</strong> ，并且扩展侧链并导致重新组织的新块具有相同的序列，但在最后调用 <strong>reorganize</strong> 而不是 <strong>notifyNewBestBlock</strong> 。</p>
 <p>对于SPV模式应用程序，块存储被赋予所有非孤立块，而不管它们连接的位置如何，并且在新的最佳链头改变时通知块存储，以便将其写入磁盘。它只能存储标题。</p>
+<h2 id="精简数据"><a href="#精简数据" class="headerlink" title="精简数据"></a>精简数据</h2><p>对于完全验证的节点，store需要做更多的事情，并且必须实现 <strong>FullPrunedBlockStore</strong> 接口。chain和store一起实施ultraprune算法，就像比特币0.8+一样。然而，与比特币0.8不同的是，store实际上会在一段时间后永久删除不需要的数据，因此它不能为其他节点提供服务，但所使用的磁盘空间要低得多。</p>
+<p>精简的节点不会尝试存储整个块链。相反，它只存储未使用的交易输出集（UTXO集）。一旦交易输出被使用，其数据不再需要，并且可以被删除。重组事件有点复杂，因为它们可以重写历史记录，因此精简存储库也应该保留一定数量的“撤销块”，允许撤销对UTXO集合的更改。存储的撤消块数量是所使用的磁盘空间与可处理的最大重新组织之间的折衷。如果撤消块被过于激进地扔掉，那么大的重组可能会永久性地将节点从链上剔除，迫使从头开始重新初始化，所以最好保守。</p>
+<p><strong>FullPrunedBlockStore</strong> 接口提供添加，删除和测试UTXO集的方法。它还具有插入块和撤消块以及开始/结束数据库事务的方法（注意：与比特币事务不同）。</p>
+<h2 id="钱包"><a href="#钱包" class="headerlink" title="钱包"></a>钱包</h2><p>Wallet类充当块链监听器并接收来自链对象的数据和事件。 它将接收到的数据保存在自身中，并跟踪所有可能对钱包用户感兴趣的交易，例如将钱存入密钥的交易。 可以使用WalletProtobufSerializer将钱包保存到协议缓冲区，并且可以随时自动更改钱包的功能。</p>
+<p>目前，电子钱包没有任何方式将自己存储到数据库中。 这将是一个很好的未来。</p>
+<p>钱包还负责更新放置在其中的交易的Confidence水平。钱包外的一个交易可能会被新节点公布的内存池更新，但最终不会了解其在链中的位置。</p>
 
       
     </div>
@@ -520,7 +526,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络"><span class="nav-number">2.</span> <span class="nav-text">网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化与反序列化"><span class="nav-number">3.</span> <span class="nav-text">序列化与反序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对等逻辑"><span class="nav-number">4.</span> <span class="nav-text">对等逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存池"><span class="nav-number">5.</span> <span class="nav-text">内存池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chains-与-stores"><span class="nav-number">6.</span> <span class="nav-text">Chains 与 stores</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络"><span class="nav-number">2.</span> <span class="nav-text">网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化与反序列化"><span class="nav-number">3.</span> <span class="nav-text">序列化与反序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对等逻辑"><span class="nav-number">4.</span> <span class="nav-text">对等逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存池"><span class="nav-number">5.</span> <span class="nav-text">内存池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chains-与-stores"><span class="nav-number">6.</span> <span class="nav-text">Chains 与 stores</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#精简数据"><span class="nav-number">7.</span> <span class="nav-text">精简数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#钱包"><span class="nav-number">8.</span> <span class="nav-text">钱包</span></a></li></ol></div>
             
 
           </div>
