@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="bitcoinj,BTC,区块链,开发," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="了解完整模式与简化模式之间的区别以及bitcoinj应用程序如何受到攻击。">
+<meta name="keywords" content="bitcoinj,BTC,区块链,开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bitcoinj安全模型">
+<meta property="og:url" content="http://yoursite.com/2018/05/22/bitcoinj安全模型/index.html">
+<meta property="og:site_name" content="Runtime编码之旅">
+<meta property="og:description" content="了解完整模式与简化模式之间的区别以及bitcoinj应用程序如何受到攻击。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-22T07:58:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bitcoinj安全模型">
+<meta name="twitter:description" content="了解完整模式与简化模式之间的区别以及bitcoinj应用程序如何受到攻击。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/22/bitcoinj安全模型/"/>
+
+
+
+
+
+  <title>bitcoinj安全模型 | Runtime编码之旅</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Runtime编码之旅</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">开始记录程序生涯的点滴积累</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/22/bitcoinj安全模型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Runtime：daizhiqing8@163.com">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runtime编码之旅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">bitcoinj安全模型</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-22T14:58:19+08:00">
+                2018-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  了解完整模式与简化模式之间的区别以及bitcoinj应用程序如何受到攻击。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>bitcoinj支持两种不同的应用模式：全面验证和简化验证。您选择的模式控制您的应用程序的资源使用情况以及您在比特币系统的其他参与者中需要多少信任。作为一名开发人员，了解这些差异以及您的应用可信或不可信的情况非常重要。</p>
+<p>首先，让我们回顾一下普通的完整节点是如何工作的。比特币解决的根本问题是就谁拥有什么而达成共识。每个节点都维护未使用输出的数据库，当尝试花费不存在或已经用完的输出的交易将被忽略。块由矿工和广播解决，以确保每个人都对交易的顺序达成一致，因此由于某种原因（例如，他们当时处于离线状态）而看不到广播交易的节点可以赶上。</p>
+<p>为每一笔交易检查，存储和更新数据库的行为相当密集。从头开始追踪数据库的当前状态也非常缓慢。出于这个原因，并非每台计算机都可以运行完整的节点。</p>
+<p>bitcoinj实现全模式和简化付款验证。在这种模式下，只存储与钱包相关的交易。其他每笔交易都会被扔掉，或者根本就没有下载。块链仍然被使用，并且广播交易仍然被接收，但这些交易不是也不能被检查以确保它们是有效的。这种操作模式既快速又轻便，足以在智能手机上运行，​​但可以通过各种方式击败。</p>
+<h2 id="Pending-transactions"><a href="#Pending-transactions" class="headerlink" title="Pending transactions"></a>Pending transactions</h2><p>当一个交易通过网络广播时，我们说它正在等待打包到一个块中。挖掘节点将看到交易，自行检查它，如果有效，请将其包含在当前要解决的块中。节点不会中继无效交易。</p>
+<p>您的应用程序将接收待处理交易，将它们添加到钱包并运行事件侦听器。但是，在SPV模式下，您必须相信交易有效的唯一原因是您连接的节点中继了交易。如果攻击者可以确保您连接到他的节点，这意味着他们可以为您提供完全无效的交易（花费不存在的资金），并且它仍然会被视为有效。</p>
+<p>由于bitcoinj应用程序不接受传入连接，因此与您交谈的对等方始终在启动时随机选择（现在基于DNS种子）。所以攻击者可能很难控制你的连接。出于这个原因，已经宣布交易的对等方的数量将暴露在TransactionConfidence对象中，您可以通过该对象来了解新对等方何时宣布交易。一旦大多数同行已经宣布，您可以确信交易在网络中传播并很可能是有效的。</p>
+<p>这种获得Confidence的方法有三种潜在的攻击。</p>
+<ul>
+<li>劫持您的整个互联网连接并将您连接到假网络。这被称为Sybil攻击，当您使用不可信的互联网连接（例如咖啡店wifi）或使用Tor时，这种攻击最容易实现。 Bitcoinj今天不支持Tor，所以在使用移动钱包时这种担心是最大的。</li>
+<li>通过同时广播两个无效交易来利用竞争条件。苏黎世联邦理工学院的研究人员在论文中探讨了这种技术。为了使技术最好地工作，攻击者必须能够连接到受害者。 bitcoinj应用程序不接受传入连接（他们没有理由这样做），所以这很难实现。未来，比特币网络可能会传递双倍支出警报，但目前尚未实施。</li>
+<li>挖掘包含双重花费的块，然后购买服务，然后广播该块。这被称为Finney attacks，并在下面讨论。</li>
+</ul>
+<h2 id="Finney-attacks"><a href="#Finney-attacks" class="headerlink" title="Finney attacks"></a>Finney attacks</h2><p>在Finney attacks中，攻击者开采了一个区块，其中包括将他的一些货币花费到另一个由他控制的地址。一旦他发现一个块，他不会立即广播出。相反，他去找一个正在接受未经确定的交易并花钱的商人。一旦他从商人那里得到了他想要的货物，他就会播出含有双重花费的块，并收回货币。Finney attacks依赖于仔细的时机和攻击者的耐心：他必须等到他找到一个可能需要很长时间的阻挡。他必须能够快速地从商人那里买东西 - 他在等待货物或者等待交付的时间时第二个矿工可能会发现并播出一个有效的块，使他的工作毫无价值。</p>
+<p>如果你符合这些标准，你可能容易受到Finney attacks：</p>
+<ul>
+<li>1.作为对未确定的交易的回报，您不可逆转地出售有价物</li>
+<li>2.攻击者可以选择购买时间</li>
+<li>3.采购过程相对较快（不到几分钟）</li>
+</ul>
+<p>以下是一些商家可以或不可以受到这种攻击的例子：</p>
+<ul>
+<li>一家自动在线商店，销售视频/游戏下载，并希望立即下载，无需等待确认。因为这是一家24小时开放的在线商店，攻击者可以选择何时进行购买。因为它是自动化的，所以购买过程很快。因为这是一个下载，销售是不可逆转的，除非你可以撤销某种在线许可检查。 <strong>易感</strong></li>
+<li>一家超市。一旦你走出商店，销售是不可逆转的。但是，攻击者无法控制购买的确切时间。除非你拥有很大比例的网络总采矿能力，并且每小时发现一次数据块，否则在超市等待发现数据块区解决方案是不可行的。即使您要找到这样的区块，购买时间仍会因收银台队列而异。一旦发现任何一个障碍物，你就可能以较高的概率使攻击失败，等待的时间越长，所以花时间去购买物品。 <strong>不易感染</strong></li>
+<li>亲自进行货币交易。发生高价值的不可逆转交易。但是，您通常无法即时组织和推出面对面的交易，因此需要提前组织更多的组织。尽管你可以建议有时间与其他人见面并进行交易，但“购买过程”需要很长时间。 <strong>不易感染</strong></li>
+</ul>
+<p>如果有人对您的应用程序执行了Finney攻击，则该交易的 <strong>TransactionConfidence</strong> 信任类型将更改为 <strong>DEAD</strong> ，并且将调用您注册的任何事件侦听器。应将 <strong>DEAD</strong> 交易看作是付款已转回，并不会计入您的余额。</p>
+<h2 id="确认交易的Confidence"><a href="#确认交易的Confidence" class="headerlink" title="确认交易的Confidence"></a>确认交易的Confidence</h2><p>许多类型的应用程序不会立即提供服务，并且可以通过包含在区块链中等待交易确认。当一个交易包含在链中时，<strong>TransactionConfidence</strong> 类型变为 <strong>BUILDING</strong> ，然后可以访问交易的深度（在此交易之上构建了多少个块），并完成了工作，这是同一交易的另一个视图。例如，在交易出现在块中后，其深度为1，并且完成的工作取决于当前的网络速度。一个小时后，平均应该有6个区块，但实际数量差异很大。每次收到新块时，交易Confidence监听器都会运行，因此您可以注册一个监听器，并在达到置信度时用它来触发交付货物或服务的行为。</p>
+<p><strong>回想一下，Confidence可以下降，也可以上升</strong> 。一个“重组”就是当你所在的链条被一条平行于你的链条取代的新链条所取代时发生的情况。重新组织可以任意更改您的钱包，例如，通过先前确认未确认的交易或（在双重支出的情况下）已经死亡的交易。在Satoshis论文中讨论了使交易失效的重新组织，并且与没有重新组织的Finney attacks略有不同，只是一个新的最佳组合。重组改变了深埋于交易链中的交易的Confidence是非常罕见的。</p>
+<p>仅仅因为交易出现在一个块中并不意味着它是有效的。再次，bitcoinj应用程序不检查交易有效性。相反，我们的假设是很难建立一个包含无效区块的区块链，因为你必须能够超越其他矿工的总和。有一种利用此假设的漏洞尚未修复：<strong>如果攻击者可以控制与比特币网络的连接，则可以阻止您查看新发现的合法数据块,并挖掘包含不良交易的无效数据块</strong> 。这种攻击是可以检测到的，因为除非攻击者能超越网络（51％攻击），否则新块到达的速度将显着下降。在未来，bitcoinj可能会提供一种“红色警报”模式，在这种模式下，标记出看起来很奇怪的事物，这会向您的应用程序指出是时候停止交易了。</p>
+<p>如果你提供的是高价值的东西，你需要多少Confidence？传统的“经验法则”是六块或一小时。另一种看待这个问题的方法是找出你能够实际等待多久，然后看看在那个时间段内平均做了多少工作，然后需要做很多工作。这样可以避免您随着时间的推移对采矿产生不同的兴趣，并确保进行双重支出攻击的成本相同。</p>
+<h2 id="证明包含在吧不完整的块中"><a href="#证明包含在吧不完整的块中" class="headerlink" title="证明包含在吧不完整的块中"></a>证明包含在吧不完整的块中</h2><p>要查找与您的钱包相关的交易，我们有两种选择。我们可以下载完整的块内容并扫描所有交易。这是低效率的 - 很多数据只会被下载而被丢弃。或者，我们可以请求符合远程节点模式的交易。我们在远程节点支持它们时使用Bloom过滤器（v0.8及更高版本）来执行此操作。如果您没有该块的完整副本，这会导致一个问题：你如何知道接收的交易真的在一个区块中？</p>
+<p>块包含一个接一个的交易列表。从这个列表中，计算Merkle树。这个结构产生一个Merkle根，一个单一的哈希值，然后放在块头中。这种方法比简单地对交易串联进行哈希处理要复杂得多，但它有一个主要优点：通过只提供该交易和一个Merkle分支，可以证明交易处于一个块中。该分支由构成原始树中的兄弟节点的散列组成。如果一个节点递给你一个块头，一个交易和一个分支，你可以检查自己交易是否被网络接受，并且不可能被伪造。该分支占用的空间比整个块体少得多，所以这是一个主要的效率胜利。多笔交易可以将他们的Merkle分行结合在一起，以获得更高的效率。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/bitcoinj/" rel="tag"># bitcoinj</a>
+          
+            <a href="/tags/BTC/" rel="tag"># BTC</a>
+          
+            <a href="/tags/区块链/" rel="tag"># 区块链</a>
+          
+            <a href="/tags/开发/" rel="tag"># 开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/22/区块链同步优化相关/" rel="next" title="区块链同步优化相关">
+                <i class="fa fa-chevron-left"></i> 区块链同步优化相关
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Runtime：daizhiqing8@163.com</p>
+              <p class="site-description motion-element" itemprop="description">希望在这里记录下自己技术生涯的学习成长过程，路漫漫其修远兮，吾将上下而求索<br><img src='http://img3.duitang.com/uploads/item/201412/23/20141223203715_QrNTy.jpeg' width='50%'></img></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pending-transactions"><span class="nav-number">2.</span> <span class="nav-text">Pending transactions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finney-attacks"><span class="nav-number">3.</span> <span class="nav-text">Finney attacks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确认交易的Confidence"><span class="nav-number">4.</span> <span class="nav-text">确认交易的Confidence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#证明包含在吧不完整的块中"><span class="nav-number">5.</span> <span class="nav-text">证明包含在吧不完整的块中</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Runtime：daizhiqing8@163.com</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

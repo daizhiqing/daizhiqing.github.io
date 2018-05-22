@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/05/18/bitcoinj入门/1631526483506_.pic.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/05/18/bitcoinj入门/1641526483990_.pic_hd.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/05/18/bitcoinj入门/1661526484301_.pic_hd.jpg">
-<meta property="og:updated_time" content="2018-05-22T06:56:27.000Z">
+<meta property="og:updated_time" content="2018-05-22T08:00:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="bitcoinj入门教程">
 <meta name="twitter:description" content="入门教程 - 关于如何在Java环境下使用该库的分步教程。持续更新中，转载请说明出处https://daizhiqing.github.io  谢谢!">
@@ -357,7 +357,7 @@
 <p>这里，我们只需检查钱包是否至少有一个密钥，如果没有，我们将添加一个新密钥。 如果我们从磁盘加载一个钱包，这个代码路径不会被采用。</p>
 <p>接下来，我们检查我们是否使用regtest模式。 如果是的话，那么我们就告诉组件只连接到本地主机，当然在该主机会运行一个bitcoind。</p>
 <p>最后，我们调用 <strong>kit.startAsync()</strong> 。 <strong>WalletAppKit</strong> 是一个 <a href="https://github.com/google/guava" target="_blank" rel="noopener">Guava服务</a>。 Guava是Google提供的广泛使用的实用程序库，它为标准Java库增加了一些有用的附加功能。 服务是一个可以启动和停止（但只有一次）的对象，并且您可以在完成启动或关闭时收到回调。 您也可以阻塞线程，它以 <strong>awaitRunning()</strong> 开始，这就是我们在这里所做的。</p>
-<p><strong>WalletAppKit</strong> 会在块链完全同步时考虑自己启动，有时可能需要一段时间。 您可以去了解<a href="https://daizhiqing.github.io/2018/05/21/区块链同步优化相关/" target="_blank" rel="noopener">如何更快地实现这一步骤</a>，但对于测试演示的应用程序，我们就不需要实施任何额外的优化了。</p>
+<p><strong>WalletAppKit</strong> 会在块链完全同步时考虑自己启动，有时可能需要一段时间。 您可以去了解<a href="https://daizhiqing.github.io/2018/05/22/区块链同步优化相关/" target="_blank" rel="noopener">如何更快地实现这一步骤</a>，但对于测试演示的应用程序，我们就不需要实施任何额外的优化了。</p>
 <p>该组件提供访问它配置的基础对象。只有在类被启动或者在启动的过程中，你才能调用这些。</p>
 <p>应用程序启动后，您会注意到应用程序运行的目录中有两个文件：一个.wallet文件和一个.spvchain文件，它们必须要形影不离的。</p>
 <h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><p>我们想知道我们的地址在什么时候收到钱以至于我们可以很快的知道去处理它相关的业务。 这是一个事件，bitcoinj与大多数Java API一样，您可以通过注册事件侦听器了解事件，事件侦听器只是实现接口的对象。 库中有一些事件监听器接口：</p>
@@ -376,7 +376,7 @@
 <p><strong>Futures</strong> 是并发编程中的一个重要概念，bitcoinj大量使用它们，特别是Guava基于标准Java Future类做了扩展，它被称为 <strong>ListenableFuture</strong>。 ListenableFuture代表未来计算或状态的结果。 您可以等待它完成（阻止调用线程），或注册将被调用的回调。 <strong>Futures</strong> 运行失败的情况下，你会得到一个异常而不是结果。</p>
 <p>在这里，我们要求一个 <strong>depth future</strong> 。当交易被链中的许多区块埋没时，这个Futures就会完成。一个深度会出现在链条的顶部区域。因此，在这里，我们说“当交易至少有一次确认时运行此代码”。通常情况下，您会调用 <strong>Futures.addCallback</strong> 方法，还有另一种注册侦听器的方法，可以在下面的代码片段中看到。</p>
 <p>然后，当发送货币的交易确认时，我们只需调用我们自己定义的forwardCoins方法。</p>
-<p>这里有一件重要的事情需要注意。depth future可能运行，然后交易深度变化小于future的参数。这是因为在任何时候比特币网络都可能进行“重组”，其中最被共识认可的链从一个切换到另一个。如果您的交易出现在另一个地方的新链中，则深度可能实际上会下降，而不是上升。在处理入站付款时，您应确保如果交易的Confidence下降，您会尝试中止您为该笔资金提供的任何服务。通过阅读<a href="#">SPV安全模型</a>，您可以了解有关此主题的更多信息。</p>
+<p>这里有一件重要的事情需要注意。depth future可能运行，然后交易深度变化小于future的参数。这是因为在任何时候比特币网络都可能进行“重组”，其中最被共识认可的链从一个切换到另一个。如果您的交易出现在另一个地方的新链中，则深度可能实际上会下降，而不是上升。在处理入站付款时，您应确保如果交易的Confidence下降，您会尝试中止您为该笔资金提供的任何服务。通过阅读<a href="https://daizhiqing.github.io/2018/05/22/bitcoinj安全模型/" target="_blank" rel="noopener">SPV安全模型</a>，您可以了解有关此主题的更多信息。</p>
 <p>处理 <strong>链重组</strong> 和 <strong>双重花费</strong> 是本教程未涉及的一个复杂主题。你可以通过阅读其他文章来了解更多。</p>
 <h2 id="发送货币"><a href="#发送货币" class="headerlink" title="发送货币"></a>发送货币</h2><p>ForwardingService的最后一部分是发送我们刚刚收到的货币。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Coin value = tx.getValueSentToMe(kit.wallet());</span><br><span class="line">System.out.println(<span class="string">"Forwarding "</span> + value.toFriendlyString() + <span class="string">" BTC"</span>);</span><br><span class="line"><span class="comment">// Now send the coins back! Send with a small fee attached to ensure rapid confirmation.</span></span><br><span class="line"><span class="keyword">final</span> Coin amountToSend = value.subtract(Transaction.REFERENCE_DEFAULT_MIN_TX_FEE);</span><br><span class="line"><span class="keyword">final</span> Wallet.SendResult sendResult = kit.wallet().sendCoins(kit.peerGroup(), forwardingAddress, amountToSend);</span><br><span class="line">System.out.println(<span class="string">"Sending ..."</span>);</span><br><span class="line"><span class="comment">// Register a callback that is invoked when the transaction has propagated across the network.</span></span><br><span class="line"><span class="comment">// This shows a second style of registering ListenableFuture callbacks, it works when you don't</span></span><br><span class="line"><span class="comment">// need access to the object the future returns.</span></span><br><span class="line">sendResult.broadcastComplete.addListener(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="comment">// The wallet has changed now, it'll get auto saved shortly or when the app shuts down.</span></span><br><span class="line">         System.out.println(<span class="string">"Sent coins onwards! Transaction hash is "</span> + sendResult.tx.getHashAsString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
 <p>首先，我们查询我们收到了多少钱（如果你是按照上面的步骤进行发送货币给自己，这个值与上面onCoinsReceived回调中的 <strong>newBalance</strong> 接收的货币数量是相同的）。</p>
@@ -511,7 +511,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
