@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="区块链,fabric,hyperledger," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="title: MacOS下Fabric环境搭建date: 2018-05-28 09:54:16tags: [区块链,fabric,hyperledger] description: 在MacOS环境下搭建fabric运行环境">
-<meta name="keywords" content="bitcoinj,JAVA,区块链,程序猿">
+<meta name="description" content="在MacOS环境下搭建fabric运行环境">
+<meta name="keywords" content="区块链,fabric,hyperledger">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Runtime编码之旅">
+<meta property="og:title" content="Mac下Fabric环境搭建">
 <meta property="og:url" content="http://yoursite.com/2018/05/28/Mac下Fabric环境搭建/index.html">
 <meta property="og:site_name" content="Runtime编码之旅">
-<meta property="og:description" content="title: MacOS下Fabric环境搭建date: 2018-05-28 09:54:16tags: [区块链,fabric,hyperledger] description: 在MacOS环境下搭建fabric运行环境">
+<meta property="og:description" content="在MacOS环境下搭建fabric运行环境">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-28T06:32:18.000Z">
+<meta property="og:updated_time" content="2018-05-28T06:35:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Runtime编码之旅">
-<meta name="twitter:description" content="title: MacOS下Fabric环境搭建date: 2018-05-28 09:54:16tags: [区块链,fabric,hyperledger] description: 在MacOS环境下搭建fabric运行环境">
+<meta name="twitter:title" content="Mac下Fabric环境搭建">
+<meta name="twitter:description" content="在MacOS环境下搭建fabric运行环境">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title> | Runtime编码之旅</title>
+  <title>Mac下Fabric环境搭建 | Runtime编码之旅</title>
   
 
 
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">Mac下Fabric环境搭建</h1>
         
 
         <div class="post-meta">
@@ -286,6 +286,10 @@
           
 
           
+              <div class="post-description">
+                  在MacOS环境下搭建fabric运行环境
+              </div>
+          
 
         </div>
       </header>
@@ -300,9 +304,7 @@
       
 
       
-        <hr>
-<p>title: MacOS下Fabric环境搭建<br>date: 2018-05-28 09:54:16<br>tags: [区块链,fabric,hyperledger]</p>
-<h2 id="description-在MacOS环境下搭建fabric运行环境"><a href="#description-在MacOS环境下搭建fabric运行环境" class="headerlink" title="description: 在MacOS环境下搭建fabric运行环境"></a>description: 在MacOS环境下搭建fabric运行环境</h2><a id="more"></a>
+        <a id="more"></a>
 <h2 id="Go环境搭建"><a href="#Go环境搭建" class="headerlink" title="Go环境搭建"></a>Go环境搭建</h2><p>下载GoLang的安装包：<a href="https://dl.google.com/go/go1.10.2.darwin-amd64.pkg" target="_blank" rel="noopener">https://dl.google.com/go/go1.10.2.darwin-amd64.pkg</a><br>下载完后点击安装，程序包默认会安装在 <strong>/usr/local/go</strong> 目录下</p>
 <h3 id="配置环境变量："><a href="#配置环境变量：" class="headerlink" title="配置环境变量："></a>配置环境变量：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.bash_profile</span><br></pre></td></tr></table></figure>
 <p>在配置文件中新增以下环境变量：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GOPATH=/Users/daizhiqing/workspace_go</span><br><span class="line"><span class="built_in">export</span> GOBIN=<span class="variable">$GOPATH</span>/bin</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOBIN</span></span><br><span class="line">``` </span><br><span class="line">其中GOPATH为你任意指定的Go工作空间，随便目录可以是自己的任何一个准备编译Fabric的目录，workspace_go文件夹需要自己创建，名字也而已自定义，后续源码级第三方依赖都将在这个工作目录下展开操作。</span><br><span class="line">``` bash</span><br><span class="line">go version</span><br></pre></td></tr></table></figure></p>
@@ -342,6 +344,16 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/区块链/" rel="tag"># 区块链</a>
+          
+            <a href="/tags/fabric/" rel="tag"># fabric</a>
+          
+            <a href="/tags/hyperledger/" rel="tag"># hyperledger</a>
+          
+        </div>
       
 
       
@@ -450,7 +462,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
@@ -483,7 +495,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#description-在MacOS环境下搭建fabric运行环境"><span class="nav-number">1.</span> <span class="nav-text">description: 在MacOS环境下搭建fabric运行环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go环境搭建"><span class="nav-number">2.</span> <span class="nav-text">Go环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置环境变量："><span class="nav-number">2.1.</span> <span class="nav-text">配置环境变量：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化工作空间："><span class="nav-number">2.2.</span> <span class="nav-text">初始化工作空间：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-Compose环境搭建"><span class="nav-number">3.</span> <span class="nav-text">Docker/Compose环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载Frabric"><span class="nav-number">4.</span> <span class="nav-text">下载Frabric</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译configtxgen工具"><span class="nav-number">5.</span> <span class="nav-text">编译configtxgen工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行完整脚本"><span class="nav-number">6.</span> <span class="nav-text">执行完整脚本</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Go环境搭建"><span class="nav-number">1.</span> <span class="nav-text">Go环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置环境变量："><span class="nav-number">1.1.</span> <span class="nav-text">配置环境变量：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化工作空间："><span class="nav-number">1.2.</span> <span class="nav-text">初始化工作空间：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-Compose环境搭建"><span class="nav-number">2.</span> <span class="nav-text">Docker/Compose环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载Frabric"><span class="nav-number">3.</span> <span class="nav-text">下载Frabric</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译configtxgen工具"><span class="nav-number">4.</span> <span class="nav-text">编译configtxgen工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行完整脚本"><span class="nav-number">5.</span> <span class="nav-text">执行完整脚本</span></a></li></ol></div>
             
 
           </div>
