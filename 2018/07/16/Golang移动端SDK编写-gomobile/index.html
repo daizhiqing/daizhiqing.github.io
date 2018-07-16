@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Golang,SDK,Android,IOS,gomobile," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这段时间公司有一个区块链虚拟币手机轻钱包的开发项目，类似于imtoken, 其中钱包的公私钥生成要放在手机端本地，看着开发人员纠结各自开发语言的特性，所以在想是不是能要给IOS和Android移动端提供一个统一可调用的工具或者功能类sdk，周末尝试了下gomobile编译go语言生成的方式,本人以下使用Mac操作为例。">
+<meta name="keywords" content="Golang,SDK,Android,IOS,gomobile">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Golang移动端SDK编写-gomobile">
+<meta property="og:url" content="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/index.html">
+<meta property="og:site_name" content="Runtime编码之旅">
+<meta property="og:description" content="这段时间公司有一个区块链虚拟币手机轻钱包的开发项目，类似于imtoken, 其中钱包的公私钥生成要放在手机端本地，看着开发人员纠结各自开发语言的特性，所以在想是不是能要给IOS和Android移动端提供一个统一可调用的工具或者功能类sdk，周末尝试了下gomobile编译go语言生成的方式,本人以下使用Mac操作为例。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/20180328235545474.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/341531734413.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/351531734708.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/android-project.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/3361531735258_.pic_hd.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/391531752628_.pic_hd.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/361531752188_.pic_hd.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/381531752411_.pic_hd.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/401531752865_.pic_hd.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/63B98A8FC13505C86A23FCD6D20D5A4E.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/411531753412_.pic.jpg">
+<meta property="og:updated_time" content="2018-07-16T15:17:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Golang移动端SDK编写-gomobile">
+<meta name="twitter:description" content="这段时间公司有一个区块链虚拟币手机轻钱包的开发项目，类似于imtoken, 其中钱包的公私钥生成要放在手机端本地，看着开发人员纠结各自开发语言的特性，所以在想是不是能要给IOS和Android移动端提供一个统一可调用的工具或者功能类sdk，周末尝试了下gomobile编译go语言生成的方式,本人以下使用Mac操作为例。">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/20180328235545474.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/"/>
+
+
+
+
+
+  <title>Golang移动端SDK编写-gomobile | Runtime编码之旅</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Runtime编码之旅</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">开始记录程序生涯的点滴积累</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/16/Golang移动端SDK编写-gomobile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Runtime：daizhiqing8@163.com">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runtime编码之旅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Golang移动端SDK编写-gomobile</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-16T15:12:52+08:00">
+                2018-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  这段时间公司有一个区块链虚拟币手机轻钱包的开发项目，类似于imtoken, 其中钱包的公私钥生成要放在手机端本地，看着开发人员纠结各自开发语言的特性，所以在想是不是能要给IOS和Android移动端提供一个统一可调用的工具或者功能类sdk，周末尝试了下gomobile编译go语言生成的方式,本人以下使用Mac操作为例。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<p> 这段时间公司有一个区块链虚拟币手机轻钱包的开发项目，类似于imtoken, 其中钱包的公私钥生成要放在手机端本地，看着开发人员纠结各自开发语言的特性，所以在想是不是能要给IOS和Android移动端提供一个统一可调用的工具或者功能类sdk，周末尝试了下gomobile编译go语言生成的方式,本人以下使用Mac操作为例。</p>
+<h2 id="准备环境"><a href="#准备环境" class="headerlink" title="准备环境"></a>准备环境</h2><p>在这里只列出相关依赖的环境，具体安装步骤自行Google/百度</p>
+<ul>
+<li><p>确保mac上安装了go,本地Golang版本：go version go1.10.2 darwin/amd64。配置好相关环境变量GOPATH，我本地配置:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GOPATH=<span class="string">"/Users/daizhiqing/workspace_go"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装Android sdk 和 Android NDK，做Android开发的同学电脑必备环境，以下是我本地SDK/NDK安装路径:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ndk.dir=<span class="string">"/Users/daizhiqing/Library/Android/sdk/ndk-bundle"</span></span><br><span class="line">sdk.dir=<span class="string">"/Users/daizhiqing/Library/Android/sdk"</span></span><br></pre></td></tr></table></figure>
+<p>  安装完毕后配置好环境变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> ANDROID_HOME=/Users/daizhiqing/Library/Android/sdk</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Xcode，Mac下最好用的IDE(个人认为)，保持更新最新版本即可</p>
+</li>
+</ul>
+<h2 id="安装gomobile"><a href="#安装gomobile" class="headerlink" title="安装gomobile"></a>安装gomobile</h2><p>网络允许的情况下,执行：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get golang.org/x/mobile/cmd/gomobile</span><br></pre></td></tr></table></figure></p>
+<p>不过国内一般无法进行下载，我们可以下载gomobile源码到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:golang/mobile.git</span><br></pre></td></tr></table></figure></p>
+<p>把github上的gomobile copy到$GOPATH/src/golang.org/x下面<br>单独执行gomobile init可能会报错：<br><img src="/2018/07/16/Golang移动端SDK编写-gomobile/20180328235545474.png" alt=""><br>可以执行以下指令初始化：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gomobile init -ndk  /Users/daizhiqing/Library/Android/sdk/ndk-bundle</span><br></pre></td></tr></table></figure></p>
+<p>后面NDK的路径根据自己的实际安装目录.</p>
+<h2 id="生成SDK"><a href="#生成SDK" class="headerlink" title="生成SDK"></a>生成SDK</h2><p>接下来我们编写Go并生成移动端使用的SDK</p>
+<ul>
+<li><strong>Android SDK生成</strong><br><img src="/2018/07/16/Golang移动端SDK编写-gomobile/341531734413.jpg" alt=""><br>以上面目录中的hello工程为例，执行以下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gomobile <span class="built_in">bind</span> -target=android hello</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/2018/07/16/Golang移动端SDK编写-gomobile/351531734708.jpg" alt=""><br>可以看到在我们的工程当前目录下，生成了 <strong>hello.arr</strong> 和 <strong>hello-source.jar</strong> 到这里相信做Android开发的同学应该知道怎么导入了。接下来在我们的Android项目中去引用这个SDK<br><img src="/2018/07/16/Golang移动端SDK编写-gomobile/android-project.png" alt=""><br>完美编译运行。，运行的结果如下：<br><img src="/2018/07/16/Golang移动端SDK编写-gomobile/3361531735258_.pic_hd.jpg" alt=""></p>
+<ul>
+<li><strong>IOS Framework</strong><br>这里我新建一个Swift的IOS项目，主要是对OC不是很了解，只好拿Swift来耍，不过对于做IOS的童鞋使用起来是差不多的O(∩_∩)O哈哈~</li>
+</ul>
+<p>执行生成IOS Framework库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gomobile <span class="built_in">bind</span> -target=ios hello</span><br></pre></td></tr></table></figure></p>
+<p><img src="/2018/07/16/Golang移动端SDK编写-gomobile/391531752628_.pic_hd.jpg" alt=""><br>如图所示将生成 <strong>Hello.framework</strong> 文件夹</p>
+<p>接下来新建一个IOS项目：<br><img src="/2018/07/16/Golang移动端SDK编写-gomobile/361531752188_.pic_hd.jpg" alt=""><br><img src="/2018/07/16/Golang移动端SDK编写-gomobile/381531752411_.pic_hd.jpg" alt=""></p>
+<p>在新项目中导入我们刚刚生成的framework,再顺便在 <strong>Main.stroyboard</strong> 新建了一个 <strong>Lable</strong><br><img src="/2018/07/16/Golang移动端SDK编写-gomobile/401531752865_.pic_hd.jpg" alt=""></p>
+<p>然后拖出下实例化，进行Go编写SDK集成<br><img src="/2018/07/16/Golang移动端SDK编写-gomobile/63B98A8FC13505C86A23FCD6D20D5A4E.png" alt=""></p>
+<p>编译运行结果：<br><img src="/2018/07/16/Golang移动端SDK编写-gomobile/411531753412_.pic.jpg" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最近工作原因，很少有时间花在单独的学习上了，也是突然公司项目的启发决定尝试下，花了周末一天时间看了下相关技术，在今晚正式在本机上跑完。</p>
+<p>其实本次最大的亮点无非就是一份代码可以在IOS和Android同时运行。虽然Golang从推出到目前还处于一直发展阶段，成熟度上，可以远远比不上发展了十几年的其他高级语言，但是我相信未来一定有它的一方天地。</p>
+<p>最后，后面有时间可能会零零散散的在这更新一些技术文章，有些朋友邮件我说之前的bitcoinj怎么不更新了？首先挺感谢你的阅读的，顺便在这里说一声抱歉，由于也是业余时间，所以不能保证定时定量去更新一些技术文章，断断续续的可能各个方向栈都会有点吧，个人也觉得自己有时间的话自己兴趣也很杂，没办法，也可能是浪吧~_~，要时不时找点新东西调剂下</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Golang/" rel="tag"># Golang</a>
+          
+            <a href="/tags/SDK/" rel="tag"># SDK</a>
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/IOS/" rel="tag"># IOS</a>
+          
+            <a href="/tags/gomobile/" rel="tag"># gomobile</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/13/Spring-Boot-Prometheus-Grafana应用可视化监控/" rel="next" title="Spring Boot+Prometheus+Grafana应用可视化监控">
+                <i class="fa fa-chevron-left"></i> Spring Boot+Prometheus+Grafana应用可视化监控
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Runtime：daizhiqing8@163.com</p>
+              <p class="site-description motion-element" itemprop="description">希望在这里记录下自己技术生涯的学习成长过程，路漫漫其修远兮，吾将上下而求索<br><img src='http://img3.duitang.com/uploads/item/201412/23/20141223203715_QrNTy.jpeg' width='50%'></img></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备环境"><span class="nav-number">1.</span> <span class="nav-text">准备环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装gomobile"><span class="nav-number">2.</span> <span class="nav-text">安装gomobile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成SDK"><span class="nav-number">3.</span> <span class="nav-text">生成SDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Runtime：daizhiqing8@163.com</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
